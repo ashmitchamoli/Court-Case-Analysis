@@ -31,8 +31,11 @@
  ┃ ┃ ┃ ┗ male_defendant_advocate.png
  ┃ ┗ precog-analysis.ipynb
  ┣ 📂Classification
- ┃ ┗ 📂Plots
+ ┃ ┣ 📂Plots
+ ┃ ┃ ┣ confusion_matrix_test.png
+ ┃ ┃ ┣ confusion_matrix_train.png
  ┃ ┃ ┗ correlation_matrix.png
+ ┃ ┗ precog-classification.ipynb
  ┗ README.md
 ```
 # Code Base
