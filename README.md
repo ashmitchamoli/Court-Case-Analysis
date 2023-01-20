@@ -90,6 +90,7 @@ To find insights, I first starting randomly querying the data and trying to find
 Finally, after I thought of a possible grouping or sorting, I queried it and looked at some statistics such as count, mean, median etc. and tried out different plots to visualise it. It was only after plotting the data that I could clearly identify outliers and irregularities.
 
 ## Classification
+### Choosing a Category
 Thinking of a category to classify the data on was very difficult as there was no clearly meaningful category that one could choose.
 
 The only columns which should logically be unavailable on the filing of a case were date_of_decision, date_first_list, date_last_list, date_next_list.
@@ -101,10 +102,60 @@ But this would have become a regression problem so I needed a way to convert it 
 
 How I decided to go about this, was by making categories based on the closing time and categorising the data based on this metric.
 I defined the following categories:
-|Closing Time | Category | 
-|--|--|
-|< 6 months| 1 |
-|6 months <=, < 3 years| 2 |
-|>=3 years| 3 |
+|Closing Time          | Category | 
+|--                    | --       |
+|< 6 months            | 1        |
+|6 months <=, < 3 years| 2        |
+|>=3 years             | 3        |
 
-After I put all the data into their respective categories, 
+### Preparing the Data
+The features that I chose for training the model were:
+``` 
+['female_defendant', 'court_no', 'type_name', 'judge_position', 
+ 'disp_name', 'purpose_name','date_of_filing']
+```
+I split the data for training and testing in the ratio of 3:2 (60% for training and 40% for testing).
+
+After this I tested the columns for linear dependance by plotting a correlation matrix and dropping columns if they show high correlation among themselves. In my case, there weren't any redundant columns and therefore there was no requirement to drop any column.
+
+![unavailable](Classification/Plots/correlation_matrix.png "Correlation Matrix") 
+
+### Training the Model
+I trained the data on 6 classification models from the sklearn library:
+```
+LogisticRegression
+DecisionTreeClassifier
+KNeighborsClassifier
+LinearDiscriminantAnalysis
+GaussianNB
+RandomForestClassifier
+```
+
+I made the predictions on both the training set and the test set and stored them for assessing the accuraccy later.
+
+### Assessing the Model
+I used 2 metrics to assess the quality of my model: accuracy and confusion matrix.
+
+The accuracy of the models is as follows:
+| Model Used | Accuracy on Training Set | Accuracy on Test Set |
+| ---------- | ------------------------ | -------------------- |
+|LogisticRegression        | 0.473 | 0.473 |
+|DecisionTreeClassifier    | 0.936 | 0.688 |
+|KNeighborsClassifier      | 0.764 | 0.671 |
+|LinearDiscriminantAnalysis| 0.475 | 0.476 |
+|GaussianNB                | 0.483 | 0.483 |
+|RandomForestClassifier 10 trees |0.922 | 0.703 |
+|RandomForestClassifier 20 trees |0.932 | 0.707 |
+|RandomForestClassifier 500 trees| 0.505 | 0.505 |
+|RandomForestClassifier 100 trees| 0.508 | 0.508 |
+
+Plotting the confusion matrix can help us visualise the accuracy of the model and also the distribution of the categorical data.
+<center>
+
+![unavailable](Classification/Plots/confusion_matrix_train.png "Correlation Matrix")
+</center>
+<center>
+
+![unavailable](Classification/Plots/confusion_matrix_test.png "Correlation Matrix") 
+
+</center>
