@@ -159,3 +159,7 @@ Plotting the confusion matrix can help us visualise the accuracy of the model an
 ![unavailable](Classification/Plots/confusion_matrix_test.png "Correlation Matrix") 
 
 </center>
+
+As we can see the diagonal is more prominent than other entries which indicates a good result.
+
+We can also see that category 2 is the most common category.
